@@ -5,17 +5,30 @@ import IconButton from 'material-ui/IconButton';
 import ZoomIn from 'material-ui/svg-icons/action/zoom-in';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
+
+import "./imageResults.css"
 class ImageResults extends Component{
     state={
         open:false,
-        currentImg:''
+        currentImg:'', 
+        visible:16,
+        
+        
     }
+    showMore = this.showMore.bind(this)
     handleOpen=img=>{
         this.setState({open:true,currentImg:img})
     }
+    
     handleClose=()=>{
         this.setState({open:false});
     }
+   
+  showMore(){
+    this.setState((old)=>{
+          return{visible:old.visible + 8}
+      })
+  }
     render()
     {
         let imageList;
@@ -25,7 +38,7 @@ class ImageResults extends Component{
         {
             imageList=(
                 <GridList cols={4}>
-                {  images.map(img=>(
+                {  images.splice(0,this.state.visible).map(img=>(
                         <GridTile
                         title={img.tags}
                         key={img.id}
@@ -59,6 +72,14 @@ class ImageResults extends Component{
             >
             <img src={this.state.currentImg} alt="" style={{width:'100%'}} />
             </Dialog>
+            <div className="container">
+          
+                <button
+               
+                type="load" onClick={this.showMore} className="glow-on-hover">Load More </button>
+               
+            </div>
+           
             </div>
         )
     }
@@ -68,3 +89,13 @@ ImageResults.propTypes={
 }
 
 export default ImageResults;
+// style=
+// {{backgroundColor:'black',
+//  color:'white',
+// marginLeft:690,
+// marginTop:100,
+// paddingTop:10,
+// paddingLeft:10,
+// fontSize:30,
+
+// }}
